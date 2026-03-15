@@ -5,8 +5,10 @@ import subjectsRouter from "./routes/subjects";
 const app = express();
 const PORT = 8000;
 
+if (!process.env.FRONTEND_URL) throw new Error("FRONTEND_URL not defined");
+
 app.use(cors({
-    origin:process.env.FRONTEND_URL,
+    origin:process.env.FRONTEND_URL || false,
     methods:["GET","POST","PUT","DELETE"],
     credentials:true
 }))
