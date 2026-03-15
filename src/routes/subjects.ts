@@ -7,10 +7,18 @@ const subjectsRouter = express.Router();
 
 subjectsRouter.get("/", async (req, res) =>{
     try {
-        const {search, department, page = 1, limit = 10} = req.query;
-        const currPage = Math.max(1, Number(page) || 1);
-        const limitPerPage = Math.max(1, Number(limit) || 10);
-
+        const { search, department, page = "1", limit = "10" } = req.query;
+        const parsedPage = Number(page);
+        const parsedLimit = Number(limit);
+        const currPage =
+            Number.isFinite(parsedPage) && Number.isInteger(parsedPage) && parsedPage > 0
+                ? parsedPage
+                : 1;
+        const rawLimit =
+            Number.isFinite(parsedLimit) && Number.isInteger(parsedLimit) && parsedLimit > 0
+                ? parsedLimit
+                : 10;
+        const limitPerPage = Math.min(rawLimit, 100);
         const offSet = (currPage - 1) * limitPerPage;
         const filterConditions = [];
 
