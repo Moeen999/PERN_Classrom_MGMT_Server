@@ -49,7 +49,7 @@ const decision = await client.protect(arcjetRequest);
             return  res.status(403).json({error:"Automated requests are not allowed"});
         }
 
-        if(decision.isDenied() && decision.reason.isBot()){
+        if(decision.isDenied() && decision.reason.isShield()){
             return  res.status(403).json({error:"Request blocked by security policy"});
         }
 

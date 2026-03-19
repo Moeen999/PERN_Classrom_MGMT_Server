@@ -14,7 +14,7 @@ app.use(cors({
     credentials:true
 }))
 app.use(express.json());
-app.use(securityMiddleware())
+app.use(securityMiddleware)
 app.use("/api/subjects",subjectsRouter)
 
 app.get("/", (_req, res) => {
