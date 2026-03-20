@@ -3,9 +3,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db";
 import * as schema from "../db/schema/auth";
 
-
+    if (!process.env.BETTER_AUTH_SECRET) {
+        throw new Error("BETTER_AUTH_SECRET not defined");
+    };
 export const auth = betterAuth({
-    secret: process.env.BETTER_AUTH_SECRET!,
+    secret: process.env.BETTER_AUTH_SECRET,
     trustedOrigins:[process.env.FRONTEND_URL!],
     database: drizzleAdapter(db, {
         provider: "pg",
